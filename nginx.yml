@@ -1,0 +1,16 @@
+---
+- hosts: test-servers
+  become: yes
+  become_user: root
+  vars: 
+    - MyMessage: "Welcome to Ansible world!"
+  
+  tasks:
+    - name: Installs nginx web server
+      yum: pkg=nginx state=installed update_cache=true
+      notify:
+        - start nginx
+  handlers:
+        - name: start nginx
+          service: name=nginx state=started
+
